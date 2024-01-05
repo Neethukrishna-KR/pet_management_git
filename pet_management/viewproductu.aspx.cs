@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace pet_management
+{
+    public partial class viewproductu : System.Web.UI.Page
+    {
+        connectionclass obj = new connectionclass();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+
+
+                int a = Convert.ToInt32(Session["catid"]);
+                string str = "select * from product where category_id=" + a + "";
+                DataSet ds = obj.fn_dataset(str);
+                DataList1.DataSource = ds;
+                DataList1.DataBind();
+            }
+        }
+
+        protected void ImageButton1_Command(object sender, CommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            Session["proid"] = id;
+            Response.Redirect("p_fullview.aspx");
+
+        }
+    }
+}
